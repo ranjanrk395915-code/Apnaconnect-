@@ -21,31 +21,33 @@
     nav button.active { background: #075e54; color: white; }
     
     .container { max-width: 900px; margin: auto; padding: 18px 14px; }
+    
     .hero { background: linear-gradient(135deg, #075e54, #10a889); color: white; padding: 25px 20px; border-radius: 12px; margin-bottom: 20px; }
     .hero h1 { margin-top: 0; font-size: 27px; margin-bottom: 10px; }
     
-    input, textarea, select { width: 100%; padding: 12px; margin: 7px 0 12px; border: 1px solid #ccc; border-radius: 8px; font-family: inherit; }
+    input, textarea, select { width: 100%; padding: 12px; margin: 7px 0 12px; border: 1px solid #ccc; border-radius: 8px; font-family: inherit; outline: none; }
+    input:focus, textarea:focus, select:focus { border-color: #075e54; }
     textarea { resize: vertical; height: 100px; }
     
     .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
     .card, .panel { background: white; padding: 16px; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-    .card { cursor: pointer; transition: transform 0.2s; }
+    .card { cursor: default; transition: transform 0.2s; }
     .card:hover { transform: translateY(-2px); }
-    .card img { width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; }
+    .card img { width: 100%; height: 140px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; }
     .card h3 { margin: 8px 0; font-size: 16px; }
     
     .hidden { display: none !important; }
     .muted { color: #64748b; font-size: 14px; }
     .badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; margin-bottom: 8px; }
     
-    button.primary { background: #075e54; color: white; border: none; border-radius: 8px; padding: 12px 16px; cursor: pointer; font-weight: bold; width: 100%; }
-    button.yellow { background: #ffca28; color: #172033; border: none; border-radius: 8px; padding: 12px 16px; cursor: pointer; font-weight: bold; }
-    button.danger { background: #dc2626; color: white; border: none; border-radius: 8px; padding: 8px 12px; cursor: pointer; }
+    /* Buttons */
+    button.primary { background: #075e54; color: white; border: none; border-radius: 8px; padding: 12px 16px; cursor: pointer; font-weight: bold; font-size: 15px; }
+    button.secondary { background: #e2e8f0; color: #172033; border: none; border-radius: 8px; padding: 12px 16px; cursor: pointer; font-weight: bold; font-size: 15px; }
+    button.danger { background: #dc2626; color: white; border: none; border-radius: 8px; padding: 8px 12px; cursor: pointer; font-size: 13px; margin-top: 5px; width: 100%; }
+    button.full-width { width: 100%; }
     
-    .status { padding: 10px; border-radius: 8px; margin: 10px 0; background: #e6f4f1; text-align: center; font-size: 14px; }
-    
-    /* Flex utilities for form buttons */
-    .flex-gap { display: flex; gap: 10px; margin-top: 10px; }
+    .status { padding: 10px; border-radius: 8px; margin: 10px 0; background: #e6f4f1; color: #075e54; text-align: center; font-size: 14px; font-weight: bold; }
+    .flex-gap { display: flex; gap: 10px; margin-top: 5px; flex-wrap: wrap; }
     
     @media (min-width: 650px) {
       .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -69,8 +71,6 @@
   </nav>
 
   <div class="container">
-    
-    <!-- Status Message -->
     <div id="status-msg" class="status hidden"></div>
 
     <!-- ================= HOME PAGE ================= -->
@@ -108,31 +108,32 @@
       <div id="product-posts" class="grid"></div>
     </div>
 
-    <!-- ================= ACCOUNT PAGE (Login/Register/Post) ================= -->
+    <!-- ================= ACCOUNT PAGE ================= -->
     <div id="page-account" class="page hidden">
       
       <!-- Auth Section -->
       <div id="auth-section" class="panel">
         <h2>🔐 Login / Register</h2>
-        <input type="email" id="auth-email" placeholder="ईमेल (Email)" required>
-        <input type="password" id="auth-password" placeholder="पासवर्ड (Password)" required>
+        <h4 style="margin-bottom: 5px;">ईमेल से अकाउंट बनाएँ</h4>
+        <input type="email" id="auth-email" placeholder="ranjanrk395916@gmail.com">
+        <input type="password" id="auth-password" placeholder="••••••••">
         <div class="flex-gap">
-          <button class="primary" onclick="loginUser()">Login</button>
-          <button class="yellow" onclick="registerUser()">Register</button>
+          <button class="primary" onclick="registerUser()">Register</button>
+          <button class="secondary" onclick="loginUser()">Login</button>
         </div>
       </div>
 
       <!-- Profile & My Posts Section -->
       <div id="profile-section" class="hidden">
-        <div class="panel" style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="panel" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
           <div>
             <h3>👤 मेरा अकाउंट</h3>
-            <p class="muted" id="user-email-display"></p>
+            <p class="muted" id="user-email-display" style="margin: 0;"></p>
           </div>
-          <button class="danger" onclick="logoutUser()">Logout</button>
+          <button class="secondary" onclick="logoutUser()">Logout</button>
         </div>
 
-        <button class="primary" onclick="togglePostForm()" style="margin-bottom: 15px;">+ नई पोस्ट बनाएं</button>
+        <button class="primary full-width" onclick="togglePostForm()" style="margin-bottom: 15px;">+ नई पोस्ट बनाएं</button>
 
         <!-- Create Post Form -->
         <div id="create-post-form" class="panel hidden">
@@ -147,9 +148,11 @@
           <textarea id="post-desc" placeholder="विवरण (Description)"></textarea>
           <input type="number" id="post-price" placeholder="₹ कीमत/सैलरी (Price/Salary)">
           <input type="text" id="post-location" placeholder="📍 लोकेशन (Location)">
-          <label>📸 फोटो अपलोड करें:</label>
-          <input type="file" id="post-image" accept="image/*">
-          <button class="primary" onclick="submitPost()" style="margin-top: 10px;">Publish Post</button>
+          
+          <label class="muted">📸 फोटो अपलोड करें (अप्शनल):</label>
+          <input type="file" id="post-image" accept="image/*" style="border: none; padding: 5px 0;">
+          
+          <button class="primary full-width" onclick="submitPost()" style="margin-top: 10px;">Publish Post</button>
         </div>
 
         <h3>📋 मेरी पोस्ट्स</h3>
@@ -161,8 +164,7 @@
 
   <script>
     // ==========================================
-    // 1. SUPABASE CONFIGURATION
-    // यहाँ अपनी Supabase URL और Key डालें
+    // 1. SUPABASE CONFIGURATION (आपकी कीज़)
     // ==========================================
     const SUPABASE_URL = 'https://ckfpogzlamlksoooiuug.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_8nzH9WJ02KJlb6cl_YLG_w_DnH9x0Ly';
@@ -192,7 +194,7 @@
       const el = document.getElementById('status-msg');
       el.innerText = msg;
       el.classList.remove('hidden');
-      setTimeout(() => el.classList.add('hidden'), 3000);
+      setTimeout(() => el.classList.add('hidden'), 4000);
     }
 
     // ==========================================
@@ -206,10 +208,14 @@
       if (type !== 'all') query = query.eq('type', type);
 
       const { data, error } = await query;
-      if (error) return container.innerHTML = '<p>Error loading posts.</p>';
+      
+      if (error) {
+        container.innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
+        return;
+      }
 
-      if (data.length === 0) {
-        container.innerHTML = '<p class="muted">कोई पोस्ट नहीं मिली।</p>';
+      if (!data || data.length === 0) {
+        container.innerHTML = '<p class="muted">कोई पोस्ट नहीं मिली। My Account में जाकर पोस्ट करें।</p>';
         return;
       }
       container.innerHTML = data.map(post => createPostCard(post)).join('');
@@ -220,7 +226,7 @@
       let text = post.type === 'room' ? '🏠 Room' : post.type === 'job' ? '💼 Job' : post.type === 'news' ? '📰 News' : '🛒 Product';
       
       return `
-        <div class="card" onclick="viewPost('${post.id}')">
+        <div class="card">
           ${post.image_url ? `<img src="${post.image_url}" alt="img">` : ''}
           <span class="badge" style="background: ${color}">${text}</span>
           <h3>${post.title}</h3>
@@ -247,7 +253,7 @@
         .or(`title.ilike.%${query}%,description.ilike.%${query}%,location.ilike.%${query}%`)
         .order('created_at', { ascending: false });
 
-      if (error) return container.innerHTML = '<p>Error searching.</p>';
+      if (error) return container.innerHTML = '<p style="color:red;">Error searching.</p>';
       if (data.length === 0) return container.innerHTML = '<p class="muted">कुछ नहीं मिला।</p>';
       
       container.innerHTML = data.map(post => createPostCard(post)).join('');
@@ -257,41 +263,54 @@
     // 5. AUTHENTICATION (LOGIN/REGISTER)
     // ==========================================
     async function checkAuth() {
-      const { data: { user } } = await supabase.auth.getUser();
-      currentUser = user;
-      
-      const authSec = document.getElementById('auth-section');
-      const profileSec = document.getElementById('profile-section');
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        currentUser = user;
+        
+        const authSec = document.getElementById('auth-section');
+        const profileSec = document.getElementById('profile-section');
 
-      if (user) {
-        authSec.classList.add('hidden');
-        profileSec.classList.remove('hidden');
-        document.getElementById('user-email-display').innerText = user.email;
-        loadMyPosts();
-      } else {
-        authSec.classList.remove('hidden');
-        profileSec.classList.add('hidden');
+        if (user) {
+          authSec.classList.add('hidden');
+          profileSec.classList.remove('hidden');
+          document.getElementById('user-email-display').innerText = user.email;
+          loadMyPosts();
+        } else {
+          authSec.classList.remove('hidden');
+          profileSec.classList.add('hidden');
+        }
+      } catch (err) {
+        console.log("Auth Error: ", err.message);
       }
     }
 
     async function registerUser() {
       const email = document.getElementById('auth-email').value;
       const password = document.getElementById('auth-password').value;
-      if(!email || !password) return alert("Email/Password भरें");
+      if(!email || !password) return alert("Email और Password दोनों भरें");
 
-      const { error } = await supabase.auth.signUp({ email, password });
-      if (error) alert(error.message);
-      else showStatus("✅ रजिस्टर हो गया! अब लॉगिन करें।");
+      try {
+        const { error } = await supabase.auth.signUp({ email, password });
+        if (error) throw error;
+        alert("✅ रजिस्टर सफल! अब आप Login कर सकते हैं। (अगर Supabase में Email Verification ऑन है, तो पहले ईमेल वेरिफाई करें)");
+      } catch (err) {
+        alert("Register Error: " + err.message);
+      }
     }
 
     async function loginUser() {
       const email = document.getElementById('auth-email').value;
       const password = document.getElementById('auth-password').value;
-      if(!email || !password) return alert("Email/Password भरें");
+      if(!email || !password) return alert("Email और Password दोनों भरें");
 
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) alert(error.message);
-      else checkAuth();
+      try {
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        showStatus("✅ लॉगिन सफल!");
+        checkAuth();
+      } catch (err) {
+        alert("Login Error: " + err.message);
+      }
     }
 
     async function logoutUser() {
@@ -300,7 +319,7 @@
     }
 
     // ==========================================
-    // 6. CREATE & DELETE POSTS (WITH IMAGE UPLOAD)
+    // 6. CREATE & DELETE POSTS
     // ==========================================
     function togglePostForm() {
       document.getElementById('create-post-form').classList.toggle('hidden');
@@ -320,80 +339,86 @@
 
       let image_url = null;
       
-      // Upload Image (If selected)
-      if (file) {
-        const fileExt = file.name.split('.').pop();
-        const fileName = `${currentUser.id}-${Date.now()}.${fileExt}`;
-        
-        const { error: uploadError } = await supabase.storage
-          .from('photos')
-          .upload(fileName, file);
+      try {
+        // फोटो अपलोड लॉजिक
+        if (file) {
+          const fileExt = file.name.split('.').pop();
+          const fileName = `${currentUser.id}-${Date.now()}.${fileExt}`;
           
-        if (uploadError) return alert("फोटो अपलोड में एरर: " + uploadError.message);
+          const { error: uploadError } = await supabase.storage.from('photos').upload(fileName, file);
+          if (uploadError) throw new Error("Photo Upload Failed: " + uploadError.message);
+          
+          const { data } = supabase.storage.from('photos').getPublicUrl(fileName);
+          image_url = data.publicUrl;
+        }
+
+        // डेटाबेस में डेटा सेव करना
+        const { error } = await supabase.from('posts').insert({
+          user_id: currentUser.id,
+          type: type,
+          title: title,
+          description: desc,
+          price: price ? parseFloat(price) : null,
+          location: loc,
+          image_url: image_url
+        });
+
+        if (error) throw error;
+
+        alert("✅ पोस्ट सफलतापूर्वक जुड़ गई!");
         
-        const { data } = supabase.storage.from('photos').getPublicUrl(fileName);
-        image_url = data.publicUrl;
-      }
-
-      // Insert Data into 'posts' table
-      const { error } = await supabase.from('posts').insert({
-        user_id: currentUser.id,
-        type: type,
-        title: title,
-        description: desc,
-        price: price ? parseFloat(price) : null,
-        location: loc,
-        image_url: image_url
-      });
-
-      if (error) {
-        alert("पोस्ट करने में एरर: " + error.message);
-      } else {
-        showStatus("✅ पोस्ट सफलतापूर्वक जुड़ गई!");
+        // फॉर्म खाली करें
         document.getElementById('post-title').value = '';
         document.getElementById('post-desc').value = '';
         document.getElementById('post-price').value = '';
+        document.getElementById('post-location').value = '';
+        document.getElementById('post-image').value = '';
+        
         togglePostForm();
         loadMyPosts();
+        fetchPosts('all', 'home-posts');
+        
+      } catch (err) {
+        alert("Error: " + err.message);
       }
     }
 
     async function loadMyPosts() {
       if (!currentUser) return;
       const container = document.getElementById('my-posts');
-      const { data, error } = await supabase.from('posts')
-        .select('*').eq('user_id', currentUser.id).order('created_at', { ascending: false });
+      
+      try {
+        const { data, error } = await supabase.from('posts').select('*').eq('user_id', currentUser.id).order('created_at', { ascending: false });
+        
+        if (error) throw error;
+        if (!data || data.length === 0) {
+          container.innerHTML = '<p class="muted">आपने अभी तक कोई पोस्ट नहीं की है।</p>';
+          return;
+        }
 
-      if (error || data.length === 0) {
-        container.innerHTML = '<p class="muted">आपने अभी तक कोई पोस्ट नहीं की है।</p>';
-        return;
+        container.innerHTML = data.map(post => `
+          <div class="card">
+            ${post.image_url ? `<img src="${post.image_url}">` : ''}
+            <h3>${post.title}</h3>
+            <button class="danger" onclick="deletePost('${post.id}')">🗑️ Delete</button>
+          </div>
+        `).join('');
+      } catch (err) {
+        container.innerHTML = `<p style="color:red;">Error: ${err.message}</p>`;
       }
-
-      container.innerHTML = data.map(post => `
-        <div class="card">
-          ${post.image_url ? `<img src="${post.image_url}">` : ''}
-          <h3>${post.title}</h3>
-          <button class="danger" onclick="deletePost('${post.id}', event)">🗑️ Delete</button>
-        </div>
-      `).join('');
     }
 
-    async function deletePost(id, event) {
-      event.stopPropagation(); // Prevents opening post
+    async function deletePost(id) {
       if (!confirm("क्या आप सच में इसे डिलीट करना चाहते हैं?")) return;
-
-      const { error } = await supabase.from('posts').delete().eq('id', id);
-      if (error) alert(error.message);
-      else {
+      try {
+        const { error } = await supabase.from('posts').delete().eq('id', id);
+        if (error) throw error;
         showStatus("🗑️ पोस्ट डिलीट हो गई");
         loadMyPosts();
+        fetchPosts('all', 'home-posts');
+      } catch (err) {
+        alert("Delete Error: " + err.message);
       }
-    }
-
-    function viewPost(id) {
-      // यहाँ आप post detail page का लॉजिक जोड़ सकते हैं, 
-      // अभी के लिए यह अलर्ट दिखाएगा
-      alert("Post ID: " + id + "\n(डिटेल पेज जल्द जुड़ेगा)");
     }
 
     // ==========================================
