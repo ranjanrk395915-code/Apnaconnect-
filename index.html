@@ -2,167 +2,353 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ApnaConnect - अपना शहर, अपना कनेक्शन</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ApnaConnect | अपना शहर, अपना कनेक्शन</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
-header{background:#075e54;color:white;padding:18px 15px}
+header{background:#075e54;color:white;padding:18px}
 .brand{font-size:26px;font-weight:bold}
-.tagline{font-size:13px;margin-top:5px}
-nav{display:flex;gap:8px;overflow-x:auto;background:white;padding:12px}
-nav button{border:0;background:#e6f4f1;padding:10px 14px;border-radius:20px;white-space:nowrap;cursor:pointer}
-nav button.active{background:#075e54;color:white}
-.hero{padding:25px 18px;background:linear-gradient(135deg,#075e54,#10a889);color:white}
-.hero h1{font-size:27px;margin:0 0 10px}
-.hero p{line-height:1.5}
-.search{display:flex;gap:8px;margin-top:16px}
-.search input{min-width:0;flex:1;padding:12px;border:0;border-radius:8px}
-.search button,.primary{background:#ffca28;color:#172033;border:0;padding:12px 15px;border-radius:8px;font-weight:bold;cursor:pointer}
-.container{padding:18px 14px;max-width:900px;margin:auto}
-.section-title{font-size:21px;margin:8px 0 15px}
+nav{display:flex;gap:8px;overflow:auto;background:white;padding:12px}
+button{cursor:pointer;border:0;border-radius:8px;padding:11px 14px;font-weight:bold}
+nav button{white-space:nowrap;background:#e6f4f1}
+button.primary{background:#075e54;color:white}
+button.yellow{background:#ffca28;color:#172033}
+.container{max-width:900px;margin:auto;padding:18px 14px}
+.hero{background:linear-gradient(135deg,#075e54,#10a889);color:white;padding:25px 18px}
+.hero h1{margin-top:0;font-size:27px}
+input,textarea,select{width:100%;padding:12px;margin:7px 0 12px;border:1px solid #d6dce5;border-radius:8px;font:inherit}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.card{background:white;padding:17px 12px;border-radius:12px;box-shadow:0 2px 8px #0000000b;cursor:pointer}
-.icon{font-size:27px}
-.card h3{margin:8px 0 5px;font-size:16px}
-.card p{margin:0;color:#687386;font-size:13px;line-height:1.5}
-.panel{background:white;padding:16px;border-radius:12px;margin-top:18px}
-input,textarea,select{font:inherit}
-.form-control{width:100%;padding:12px;margin:7px 0 12px;border:1px solid #d8dee8;border-radius:8px}
-.hidden{display:none}
-.post{border-bottom:1px solid #eee;padding:12px 0}
-.badge{display:inline-block;background:#e5f5ed;color:#08704f;padding:5px 8px;border-radius:15px;font-size:12px}
-footer{text-align:center;padding:25px;color:#667085;font-size:13px}
-@media(min-width:600px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.hero{padding:40px max(25px,calc((100% - 870px)/2))}}
+.card,.panel{background:white;padding:16px;border-radius:12px;margin-bottom:12px;box-shadow:0 2px 8px #0000000b}
+.card{cursor:pointer}
+.card h3{margin:8px 0}
+.hidden{display:none!important}
+.muted{color:#64748b;font-size:14px}
+.listing{border-bottom:1px solid #e5e7eb;padding:14px 0}
+.listing h3{margin:6px 0}
+footer{text-align:center;padding:25px;color:#64748b}
+.status{padding:10px;border-radius:8px;margin:10px 0;background:#e6f4f1}
+@media(min-width:650px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 </style>
 </head>
 <body>
+
 <header>
   <div class="brand">🌐 ApnaConnect</div>
-  <div class="tagline">अपना शहर, अपना कनेक्शन</div>
+  <p>अपना शहर, अपना कनेक्शन</p>
 </header>
 
-<nav id="nav">
-  <button class="active" onclick="showSection('home',this)">🏠 Home</button>
-  <button onclick="showSection('rooms',this)">🛏️ Room Rent</button>
-  <button onclick="showSection('jobs',this)">💼 Jobs</button>
-  <button onclick="showSection('news',this)">📰 News</button>
-  <button onclick="showSection('shopping',this)">🛒 Shopping</button>
-  <button onclick="showSection('account',this)">👤 Login/Register</button>
+<nav>
+  <button onclick="showPage('home')">🏠 Home</button>
+  <button onclick="showPage('rooms')">🛏️ Room Rent</button>
+  <button onclick="showPage('jobs')">💼 Jobs</button>
+  <button onclick="showPage('news')">📰 News</button>
+  <button onclick="showPage('shopping')">🛒 Shopping</button>
+  <button onclick="showPage('account')">👤 Login/Register</button>
+  <button onclick="showPage('post')">➕ Post</button>
 </nav>
 
 <section id="home">
   <div class="hero">
     <h1>आपके शहर की हर जरूरत, एक जगह!</h1>
-    <p>कमरा खोजें, नौकरी ढूँढें, खबरें पढ़ें और अपने शहर से जुड़ें।</p>
-    <div class="search">
-      <input id="citySearch" placeholder="शहर का नाम लिखें">
-      <button onclick="searchCity()">खोजें</button>
-    </div>
+    <p>कमरा खोजें, नौकरी खोजें और अपने शहर से जुड़ें।</p>
+    <input id="homeCity" placeholder="शहर का नाम, जैसे Patna">
+    <button class="yellow" onclick="searchRooms()">कमरे खोजें</button>
   </div>
   <main class="container">
-    <h2 class="section-title">आप क्या खोज रहे हैं?</h2>
+    <h2>आप क्या खोज रहे हैं?</h2>
     <div class="grid">
-      <div class="card" onclick="showSection('rooms')"><div class="icon">🏠</div><h3>Room Rent</h3><p>किराए के कमरे और फ्लैट खोजें।</p></div>
-      <div class="card" onclick="showSection('jobs')"><div class="icon">💼</div><h3>Jobs</h3><p>अपने शहर में नौकरी के अवसर खोजें।</p></div>
-      <div class="card" onclick="showSection('news')"><div class="icon">📰</div><h3>News</h3><p>ताजा खबरों के लिए सेक्शन।</p></div>
-      <div class="card" onclick="showSection('shopping')"><div class="icon">🛍️</div><h3>Shopping</h3><p>प्रोडक्ट और स्थानीय सामान।</p></div>
-      <div class="card" onclick="showSection('account')"><div class="icon">🔐</div><h3>Login / Register</h3><p>अकाउंट बनाकर जुड़ें।</p></div>
-      <div class="card" onclick="showSection('post')"><div class="icon">➕</div><h3>अपनी पोस्ट डालें</h3><p>अपनी जानकारी साझा करें।</p></div>
+      <div class="card" onclick="showPage('rooms')"><div>🏠</div><h3>Room Rent</h3><p>किराए के कमरे खोजें।</p></div>
+      <div class="card" onclick="showPage('jobs')"><div>💼</div><h3>Jobs</h3><p>नौकरी के अवसर देखें।</p></div>
+      <div class="card" onclick="showPage('news')"><div>📰</div><h3>News</h3><p>समाचार सेक्शन।</p></div>
+      <div class="card" onclick="showPage('shopping')"><div>🛒</div><h3>Shopping</h3><p>प्रोडक्ट लिस्टिंग।</p></div>
+      <div class="card" onclick="showPage('account')"><div>🔐</div><h3>Login/Register</h3><p>अपना अकाउंट बनाएँ।</p></div>
+      <div class="card" onclick="showPage('post')"><div>➕</div><h3>अपनी पोस्ट डालें</h3><p>कमरे की जानकारी साझा करें।</p></div>
     </div>
   </main>
 </section>
 
-<main class="container hidden" id="rooms">
-  <h2 class="section-title">🛏️ Room Rent</h2>
-  <p>किराए के कमरे खोजें या अपनी रूम लिस्टिंग जोड़ें।</p>
-  <button class="primary" onclick="showSection('post')">+ कमरा पोस्ट करें</button>
-  <div id="roomList" class="panel"><p>कमरों की पोस्ट यहाँ दिखाई देंगी। डेटाबेस जोड़ना अभी बाकी है।</p></div>
+<main id="rooms" class="container hidden">
+  <h2>🛏️ Room Rent</h2>
+  <input id="roomSearchCity" placeholder="शहर से खोजें, जैसे Patna">
+  <button class="primary" onclick="searchRooms()">Search Rooms</button>
+  <div id="roomListings" class="panel">कमरों की लिस्ट लोड हो रही है...</div>
+  <button class="primary" onclick="showPage('post')">+ कमरा पोस्ट करें</button>
 </main>
 
-<main class="container hidden" id="jobs">
-  <h2 class="section-title">💼 Jobs</h2>
-  <div class="panel"><p>यहाँ नौकरी की लिस्टिंग दिखाई देंगी।</p><button class="primary" onclick="showSection('post')">+ नौकरी पोस्ट करें</button></div>
+<main id="jobs" class="container hidden">
+  <h2>💼 Jobs</h2>
+  <div class="panel">यह सेक्शन तैयार है। नौकरी पोस्ट और खोजने का डेटाबेस अगले चरण में जोड़ेंगे।</div>
 </main>
 
-<main class="container hidden" id="news">
-  <h2 class="section-title">📰 News</h2>
-  <div class="panel"><p>यहाँ समाचार प्रकाशित किए जा सकते हैं। लाइव समाचार जोड़ना अभी बाकी है।</p></div>
+<main id="news" class="container hidden">
+  <h2>📰 News</h2>
+  <div class="panel">यहाँ समाचार सेक्शन है। समाचार प्रकाशित करने की सुविधा अगले चरण में जोड़ेंगे।</div>
 </main>
 
-<main class="container hidden" id="shopping">
-  <h2 class="section-title">🛒 Shopping</h2>
-  <div class="panel"><p>स्थानीय सामान और प्रोडक्ट की लिस्टिंग के लिए यह सेक्शन तैयार है।</p></div>
+<main id="shopping" class="container hidden">
+  <h2>🛒 Shopping</h2>
+  <div class="panel">यहाँ प्रोडक्ट लिस्टिंग का सेक्शन है। प्रोडक्ट डेटाबेस और खरीदने की सुविधा अगले चरण में जोड़ेंगे।</div>
 </main>
 
-<main class="container hidden" id="account">
-  <h2 class="section-title">👤 Login / Register</h2>
+<main id="account" class="container hidden">
+  <h2>🔐 Login / Register</h2>
   <div class="panel">
-    <p>अकाउंट सिस्टम जोड़ने के लिए अगला चरण पूरा करना होगा।</p>
-    <label>ईमेल</label><input class="form-control" type="email" placeholder="आपका ईमेल" disabled>
-    <label>पासवर्ड</label><input class="form-control" type="password" placeholder="पासवर्ड" disabled>
-    <button class="primary" disabled>अभी सेटअप बाकी है</button>
+    <h3>ईमेल से अकाउंट बनाएँ</h3>
+    <input id="email" type="email" placeholder="आपका ईमेल">
+    <input id="password" type="password" placeholder="कम-से-कम 6 अक्षर का पासवर्ड">
+    <button class="primary" onclick="registerUser()">Register</button>
+    <button onclick="loginUser()">Login</button>
+    <button onclick="logoutUser()">Logout</button>
+    <p id="authStatus" class="status">पहले Supabase कनेक्शन सेट करें।</p>
+  </div>
+  <div class="panel">
+    <h3>मेरी पोस्ट</h3>
+    <button class="primary" onclick="loadMyRooms()">मेरी पोस्ट दिखाएँ</button>
+    <div id="myListings"></div>
   </div>
 </main>
 
-<main class="container hidden" id="post">
-  <h2 class="section-title">➕ नई पोस्ट</h2>
+<main id="post" class="container hidden">
+  <h2>➕ कमरा पोस्ट करें</h2>
   <div class="panel">
-    <label>पोस्ट का प्रकार</label>
-    <select id="postType" class="form-control">
-      <option value="Room">Room Rent</option>
-      <option value="Job">Job</option>
-      <option value="Product">Shopping / Product</option>
-    </select>
-    <label>शीर्षक</label><input id="postTitle" class="form-control" placeholder="जैसे पटना में कमरा उपलब्ध">
-    <label>शहर</label><input id="postCity" class="form-control" placeholder="जैसे पटना">
-    <label>जानकारी</label><textarea id="postDescription" class="form-control" placeholder="पूरी जानकारी लिखें"></textarea>
-    <button class="primary" onclick="saveDemoPost()">पोस्ट का Preview देखें</button>
-    <p id="postMessage"></p>
-    <p style="font-size:13px;color:#687386">यह अभी केवल डेमो है। पोस्ट सभी यूज़र्स के लिए सेव करने हेतु Login और Database जोड़ना होगा।</p>
+    <label>पोस्ट का शीर्षक</label>
+    <input id="title" placeholder="जैसे पटना में कमरा उपलब्ध">
+    <label>शहर</label>
+    <input id="city" placeholder="जैसे Patna">
+    <label>पूरा पता (वैकल्पिक)</label>
+    <input id="address" placeholder="इलाका या पता">
+    <label>मासिक किराया (₹)</label>
+    <input id="rent" type="number" min="0" placeholder="जैसे 4000">
+    <label>मोबाइल नंबर (वैकल्पिक)</label>
+    <input id="phone" type="tel" placeholder="संपर्क नंबर">
+    <label>कमरे की जानकारी</label>
+    <textarea id="description" placeholder="कमरे की सुविधाएँ, नियम आदि"></textarea>
+    <button class="primary" onclick="createRoom()">पोस्ट सेव करें</button>
+    <p id="postStatus" class="status">पोस्ट करने के लिए लॉगिन करना जरूरी है।</p>
   </div>
 </main>
 
-<footer>© 2026 ApnaConnect · अपना शहर, अपना कनेक्शन</footer>
+<footer>© 2026 ApnaConnect · All Rights Reserved</footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-function showSection(id,button){
-  document.querySelectorAll('body > section, body > main.container').forEach(el=>el.classList.add('hidden'));
-  const target=document.getElementById(id);
-  if(target) target.classList.remove('hidden');
-  document.querySelectorAll('#nav button').forEach(b=>b.classList.remove('active'));
-  if(button) button.classList.add('active');
-  window.scrollTo(0,0);
+/*
+  IMPORTANT:
+  Replace the two placeholder values below with your own
+  Supabase Project URL and Publishable Key.
+  Never put a Secret/Service Role key here.
+*/
+const SUPABASE_URL = "PASTE_YOUR_PROJECT_URL_HERE";
+const SUPABASE_KEY = "PASTE_YOUR_PUBLISHABLE_KEY_HERE";
+
+let db = null;
+let currentUser = null;
+
+if (window.supabase &&
+    SUPABASE_URL.startsWith("https://") &&
+    !SUPABASE_URL.includes("PASTE_") &&
+    SUPABASE_KEY.startsWith("sb_publishable_")) {
+  db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 }
-function searchCity(){
-  const city=document.getElementById('citySearch').value.trim();
-  showSection('rooms');
-  document.getElementById('roomList').innerHTML='<p>शहर: <b>'+escapeText(city||'सभी शहर')+'</b></p><p>अभी डेटाबेस से कमरे खोजना सेटअप होना बाकी है।</p>';
+
+function showPage(id) {
+  document.querySelectorAll("body > section, body > main.container")
+    .forEach(el => el.classList.add("hidden"));
+  const page = document.getElementById(id);
+  if (page) page.classList.remove("hidden");
+  window.scrollTo(0, 0);
+  if (id === "rooms") loadRooms();
+  if (id === "account") checkUser();
 }
-function saveDemoPost(){
-  const title=document.getElementById('postTitle').value.trim();
-  const city=document.getElementById('postCity').value.trim();
-  const description=document.getElementById('postDescription').value.trim();
-  const type=document.getElementById('postType').value;
-  if(!title||!city){document.getElementById('postMessage').textContent='कृपया शीर्षक और शहर भरें।';return;}
-  document.getElementById('postMessage').innerHTML='';
-  const item=document.createElement('div');
-  item.className='post';
-  const badge=document.createElement('span');badge.className='badge';badge.textContent=type;
-  const heading=document.createElement('h3');heading.textContent=title;
-  const location=document.createElement('p');location.textContent='📍 '+city;
-  const detail=document.createElement('p');detail.textContent=description;
-  item.append(badge,heading,location,detail);
-  let list=document.getElementById('roomList');
-  if(type==='Room'){
-    list.innerHTML='';list.appendChild(item);
-  }else{
-    alert('डेमो Preview: '+title+' ('+type+') — इसे अभी डेटाबेस में सेव नहीं किया गया है।');
+
+function readyDb() {
+  if (!db) {
+    alert("पहले कोड में Supabase Project URL और Publishable Key डालें।");
+    return false;
   }
-  document.getElementById('postMessage').textContent='डेमो तैयार है। यह पोस्ट अभी केवल इसी पेज पर दिखेगी, स्थायी रूप से सेव नहीं होगी।';
+  return true;
 }
-function escapeText(s){
-  return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+async function registerUser() {
+  if (!readyDb()) return;
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  if (!email || password.length < 6) {
+    alert("ईमेल भरें और कम-से-कम 6 अक्षर का पासवर्ड डालें।");
+    return;
+  }
+  const {data, error} = await db.auth.signUp({email, password});
+  document.getElementById("authStatus").textContent = error
+    ? error.message
+    : "रजिस्ट्रेशन अनुरोध भेज दिया गया। यदि ईमेल पुष्टि माँगी जाए, तो अपने ईमेल में लिंक खोलें।";
+}
+
+async function loginUser() {
+  if (!readyDb()) return;
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const {data, error} = await db.auth.signInWithPassword({email, password});
+  document.getElementById("authStatus").textContent = error
+    ? error.message
+    : "लॉगिन सफल: " + data.user.email;
+  if (!error) {
+    currentUser = data.user;
+    await loadRooms();
+  }
+}
+
+async function logoutUser() {
+  if (!readyDb()) return;
+  const {error} = await db.auth.signOut();
+  currentUser = null;
+  document.getElementById("authStatus").textContent =
+    error ? error.message : "आप लॉगआउट हो गए हैं।";
+}
+
+async function checkUser() {
+  if (!readyDb()) return;
+  const {data} = await db.auth.getUser();
+  currentUser = data.user || null;
+  document.getElementById("authStatus").textContent = currentUser
+    ? "लॉगिन हैं: " + currentUser.email
+    : "अभी लॉगिन नहीं हैं।";
+}
+
+async function createRoom() {
+  if (!readyDb()) return;
+  const {data: authData, error: authError} = await db.auth.getUser();
+  const user = authData.user;
+  if (authError || !user) {
+    alert("पहले Login/Register करें।");
+    showPage("account");
+    return;
+  }
+
+  const title = document.getElementById("title").value.trim();
+  const city = document.getElementById("city").value.trim();
+  const rent = Number(document.getElementById("rent").value);
+  if (!title || !city || !Number.isFinite(rent) || rent < 0) {
+    alert("शीर्षक, शहर और सही किराया भरें।");
+    return;
+  }
+
+  const listing = {
+    user_id: user.id,
+    title,
+    city,
+    address: document.getElementById("address").value.trim() || null,
+    monthly_rent: rent,
+    contact_phone: document.getElementById("phone").value.trim() || null,
+    description: document.getElementById("description").value.trim() || null
+  };
+
+  const {error} = await db.from("room_listings").insert(listing);
+  document.getElementById("postStatus").textContent = error
+    ? "पोस्ट सेव नहीं हुई: " + error.message
+    : "पोस्ट डेटाबेस में सेव हो गई!";
+  if (!error) {
+    ["title","city","address","rent","phone","description"].forEach(
+      id => document.getElementById(id).value = ""
+    );
+    await loadRooms();
+  }
+}
+
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, ch => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+  })[ch]);
+}
+
+async function loadRooms() {
+  const box = document.getElementById("roomListings");
+  if (!box) return;
+  if (!readyDb()) {
+    box.textContent = "Supabase कनेक्शन सेट करना बाकी है।";
+    return;
+  }
+  const {data, error} = await db.from("room_listings")
+    .select("*").order("created_at", {ascending:false});
+  if (error) {
+    box.textContent = "पोस्ट लोड नहीं हुई: " + error.message;
+    return;
+  }
+  renderRooms(data || [], box);
+}
+
+function renderRooms(rows, box) {
+  if (!rows.length) {
+    box.textContent = "अभी कोई कमरा पोस्ट नहीं है।";
+    return;
+  }
+  box.innerHTML = rows.map(r => `
+    <article class="listing">
+      <h3>${escapeHtml(r.title)}</h3>
+      <p>📍 ${escapeHtml(r.city)} ${r.address ? " · " + escapeHtml(r.address) : ""}</p>
+      <p><b>किराया: ₹${escapeHtml(r.monthly_rent)} / महीना</b></p>
+      <p>${escapeHtml(r.description || "")}</p>
+      ${r.contact_phone ? `<p>📞 ${escapeHtml(r.contact_phone)}</p>` : ""}
+      <small class="muted">${escapeHtml(r.created_at ? new Date(r.created_at).toLocaleDateString("hi-IN") : "")}</small>
+    </article>`).join("");
+}
+
+async function searchRooms() {
+  if (!readyDb()) return;
+  const city = (
+    document.getElementById("roomSearchCity")?.value ||
+    document.getElementById("homeCity")?.value || ""
+  ).trim();
+  const box = document.getElementById("roomListings");
+  showPage("rooms");
+  if (!box) return;
+  let query = db.from("room_listings").select("*").order("created_at", {ascending:false});
+  if (city) query = query.ilike("city", "%" + city + "%");
+  const {data, error} = await query;
+  if (error) {
+    box.textContent = "खोज में समस्या: " + error.message;
+    return;
+  }
+  renderRooms(data || [], box);
+}
+
+async function loadMyRooms() {
+  if (!readyDb()) return;
+  const {data: authData} = await db.auth.getUser();
+  if (!authData.user) {
+    alert("पहले Login करें।");
+    return;
+  }
+  const {data, error} = await db.from("room_listings")
+    .select("*").eq("user_id", authData.user.id).order("created_at",{ascending:false});
+  const box = document.getElementById("myListings");
+  if (error) {
+    box.textContent = error.message;
+    return;
+  }
+  if (!data.length) {
+    box.textContent = "आपकी कोई पोस्ट नहीं है।";
+    return;
+  }
+  box.innerHTML = data.map(r => `
+    <div class="listing">
+      <b>${escapeHtml(r.title)}</b> — ₹${escapeHtml(r.monthly_rent)}
+      <button onclick="deleteRoom(${Number(r.id)})">Delete</button>
+    </div>`).join("");
+}
+
+async function deleteRoom(id) {
+  if (!readyDb() || !confirm("क्या आप यह पोस्ट हटाना चाहते हैं?")) return;
+  const {data: authData} = await db.auth.getUser();
+  if (!authData.user) return alert("पहले Login करें।");
+  const {error} = await db.from("room_listings").delete()
+    .eq("id", id).eq("user_id", authData.user.id);
+  if (error) alert("पोस्ट नहीं हटाई गई: " + error.message);
+  else loadMyRooms();
+}
+
+if (db) {
+  db.auth.getUser().then(({data}) => { currentUser = data.user || null; });
 }
 </script>
 </body>
