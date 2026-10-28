@@ -31,23 +31,25 @@
     
     .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
     .card, .panel { background: white; padding: 16px; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-    .card { cursor: default; transition: transform 0.2s; }
+    .card { cursor: default; transition: transform 0.2s; display: flex; flex-direction: column; }
     .card:hover { transform: translateY(-2px); }
     .card img { width: 100%; height: 140px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; }
     .card h3 { margin: 8px 0; font-size: 16px; }
     
     .hidden { display: none !important; }
     .muted { color: #64748b; font-size: 14px; }
-    .badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; margin-bottom: 8px; }
+    .badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; margin-bottom: 8px; width: fit-content; }
     
-    /* Buttons */
     button.primary { background: #075e54; color: white; border: none; border-radius: 8px; padding: 12px 16px; cursor: pointer; font-weight: bold; font-size: 15px; }
     button.secondary { background: #e2e8f0; color: #172033; border: none; border-radius: 8px; padding: 12px 16px; cursor: pointer; font-weight: bold; font-size: 15px; }
-    button.danger { background: #dc2626; color: white; border: none; border-radius: 8px; padding: 8px 12px; cursor: pointer; font-size: 13px; margin-top: 5px; width: 100%; }
-    button.full-width { width: 100%; }
+    button.danger { background: #dc2626; color: white; border: none; border-radius: 8px; padding: 8px 12px; cursor: pointer; font-size: 13px; }
+    button.edit { background: #ffca28; color: #172033; border: none; border-radius: 8px; padding: 8px 12px; cursor: pointer; font-size: 13px; }
+    
+    .flex-gap { display: flex; gap: 10px; margin-top: 5px; flex-wrap: wrap; }
+    .btn-group { display: flex; gap: 5px; margin-top: auto; padding-top: 10px; }
+    .btn-group button { flex: 1; }
     
     .status { padding: 10px; border-radius: 8px; margin: 10px 0; background: #e6f4f1; color: #075e54; text-align: center; font-size: 14px; font-weight: bold; }
-    .flex-gap { display: flex; gap: 10px; margin-top: 5px; flex-wrap: wrap; }
     
     @media (min-width: 650px) {
       .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -86,25 +88,25 @@
 
     <!-- ================= ROOM PAGE ================= -->
     <div id="page-rooms" class="page hidden">
-      <h2>🏠 Room Rent (किराये के कमरे)</h2>
+      <h2>🏠 Room Rent</h2>
       <div id="room-posts" class="grid"></div>
     </div>
 
     <!-- ================= JOBS PAGE ================= -->
     <div id="page-jobs" class="page hidden">
-      <h2>💼 Jobs (नौकरियां)</h2>
+      <h2>💼 Jobs</h2>
       <div id="job-posts" class="grid"></div>
     </div>
 
     <!-- ================= NEWS PAGE ================= -->
     <div id="page-news" class="page hidden">
-      <h2>📰 News (ताज़ा खबरें)</h2>
+      <h2>📰 News</h2>
       <div id="news-posts" class="grid"></div>
     </div>
 
     <!-- ================= SHOPPING PAGE ================= -->
     <div id="page-shopping" class="page hidden">
-      <h2>🛒 Shopping (प्रोडक्ट्स)</h2>
+      <h2>🛒 Shopping</h2>
       <div id="product-posts" class="grid"></div>
     </div>
 
@@ -114,30 +116,30 @@
       <!-- Auth Section -->
       <div id="auth-section" class="panel">
         <h2>🔐 Login / Register</h2>
-        <h4 style="margin-bottom: 5px;">ईमेल से अकाउंट बनाएँ</h4>
-        <input type="email" id="auth-email" placeholder="ranjanrk395916@gmail.com">
-        <input type="password" id="auth-password" placeholder="••••••••">
+        <p class="muted">ईमेल से अकाउंट बनाएँ या लॉगिन करें</p>
+        <input type="email" id="auth-email" placeholder="Email (example@gmail.com)">
+        <input type="password" id="auth-password" placeholder="Password (कम से कम 6 अक्षर)">
         <div class="flex-gap">
-          <button class="primary" onclick="registerUser()">Register</button>
-          <button class="secondary" onclick="loginUser()">Login</button>
+          <button class="primary" style="flex:1;" onclick="loginUser()">Login</button>
+          <button class="secondary" style="flex:1;" onclick="registerUser()">Register</button>
         </div>
       </div>
 
-      <!-- Profile & My Posts Section -->
+      <!-- Profile & Posts Section -->
       <div id="profile-section" class="hidden">
-        <div class="panel" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <div class="panel" style="display: flex; justify-content: space-between; align-items: center;">
           <div>
-            <h3>👤 मेरा अकाउंट</h3>
-            <p class="muted" id="user-email-display" style="margin: 0;"></p>
+            <h3 style="margin:0;">👤 मेरा अकाउंट</h3>
+            <p class="muted" id="user-email-display" style="margin: 5px 0 0 0;"></p>
           </div>
           <button class="secondary" onclick="logoutUser()">Logout</button>
         </div>
 
-        <button class="primary full-width" onclick="togglePostForm()" style="margin-bottom: 15px;">+ नई पोस्ट बनाएं</button>
+        <button class="primary" id="add-post-btn" style="width: 100%; margin-bottom: 15px;" onclick="togglePostForm()">+ नई पोस्ट बनाएं</button>
 
-        <!-- Create Post Form -->
+        <!-- Create/Edit Post Form -->
         <div id="create-post-form" class="panel hidden">
-          <h3>नई पोस्ट जोड़ें</h3>
+          <h3 id="form-title">नई पोस्ट जोड़ें</h3>
           <select id="post-type">
             <option value="room">🏠 Room Rent</option>
             <option value="job">💼 Jobs</option>
@@ -148,11 +150,15 @@
           <textarea id="post-desc" placeholder="विवरण (Description)"></textarea>
           <input type="number" id="post-price" placeholder="₹ कीमत/सैलरी (Price/Salary)">
           <input type="text" id="post-location" placeholder="📍 लोकेशन (Location)">
+          <input type="text" id="post-company" placeholder="🏢 कंपनी (सिर्फ Jobs के लिए)">
           
-          <label class="muted">📸 फोटो अपलोड करें (अप्शनल):</label>
+          <label class="muted">📸 फोटो अपलोड करें (Optional):</label>
           <input type="file" id="post-image" accept="image/*" style="border: none; padding: 5px 0;">
           
-          <button class="primary full-width" onclick="submitPost()" style="margin-top: 10px;">Publish Post</button>
+          <div class="flex-gap">
+            <button class="primary" id="submit-btn" onclick="submitPost()" style="flex: 1;">Publish Post</button>
+            <button class="secondary" onclick="cancelEdit()" id="cancel-btn" style="flex: 1; display: none;">Cancel</button>
+          </div>
         </div>
 
         <h3>📋 मेरी पोस्ट्स</h3>
@@ -164,13 +170,14 @@
 
   <script>
     // ==========================================
-    // 1. SUPABASE CONFIGURATION (आपकी कीज़)
+    // 1. SUPABASE CONFIGURATION
     // ==========================================
     const SUPABASE_URL = 'https://ckfpogzlamlksoooiuug.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_8nzH9WJ02KJlb6cl_YLG_w_DnH9x0Ly';
 
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     let currentUser = null;
+    let editingPostId = null; // Edit mode के लिए
 
     // ==========================================
     // 2. PAGE NAVIGATION
@@ -215,7 +222,7 @@
       }
 
       if (!data || data.length === 0) {
-        container.innerHTML = '<p class="muted">कोई पोस्ट नहीं मिली। My Account में जाकर पोस्ट करें।</p>';
+        container.innerHTML = '<p class="muted">कोई पोस्ट नहीं मिली।</p>';
         return;
       }
       container.innerHTML = data.map(post => createPostCard(post)).join('');
@@ -232,6 +239,7 @@
           <h3>${post.title}</h3>
           ${post.price ? `<p style="color: #075e54; font-weight: bold; margin: 5px 0;">₹${post.price}</p>` : ''}
           ${post.location ? `<p class="muted" style="margin: 2px 0;">📍 ${post.location}</p>` : ''}
+          ${post.company ? `<p class="muted" style="margin: 2px 0;">🏢 ${post.company}</p>` : ''}
         </div>
       `;
     }
@@ -250,7 +258,7 @@
       container.innerHTML = '<p class="muted">खोज रहे हैं...</p>';
 
       const { data, error } = await supabase.from('posts').select('*')
-        .or(`title.ilike.%${query}%,description.ilike.%${query}%,location.ilike.%${query}%`)
+        .or(`title.ilike.%${query}%,description.ilike.%${query}%,location.ilike.%${query}%,company.ilike.%${query}%`)
         .order('created_at', { ascending: false });
 
       if (error) return container.innerHTML = '<p style="color:red;">Error searching.</p>';
@@ -263,24 +271,20 @@
     // 5. AUTHENTICATION (LOGIN/REGISTER)
     // ==========================================
     async function checkAuth() {
-      try {
-        const { data: { user } } = await supabase.auth.getUser();
-        currentUser = user;
-        
-        const authSec = document.getElementById('auth-section');
-        const profileSec = document.getElementById('profile-section');
+      const { data: { user } } = await supabase.auth.getUser();
+      currentUser = user;
+      
+      const authSec = document.getElementById('auth-section');
+      const profileSec = document.getElementById('profile-section');
 
-        if (user) {
-          authSec.classList.add('hidden');
-          profileSec.classList.remove('hidden');
-          document.getElementById('user-email-display').innerText = user.email;
-          loadMyPosts();
-        } else {
-          authSec.classList.remove('hidden');
-          profileSec.classList.add('hidden');
-        }
-      } catch (err) {
-        console.log("Auth Error: ", err.message);
+      if (user) {
+        authSec.classList.add('hidden');
+        profileSec.classList.remove('hidden');
+        document.getElementById('user-email-display').innerText = user.email;
+        loadMyPosts();
+      } else {
+        authSec.classList.remove('hidden');
+        profileSec.classList.add('hidden');
       }
     }
 
@@ -289,13 +293,9 @@
       const password = document.getElementById('auth-password').value;
       if(!email || !password) return alert("Email और Password दोनों भरें");
 
-      try {
-        const { error } = await supabase.auth.signUp({ email, password });
-        if (error) throw error;
-        alert("✅ रजिस्टर सफल! अब आप Login कर सकते हैं। (अगर Supabase में Email Verification ऑन है, तो पहले ईमेल वेरिफाई करें)");
-      } catch (err) {
-        alert("Register Error: " + err.message);
-      }
+      const { error } = await supabase.auth.signUp({ email, password });
+      if (error) alert("Register Error: " + error.message);
+      else alert("✅ रजिस्टर सफल! अब आप Login कर सकते हैं।");
     }
 
     async function loginUser() {
@@ -303,26 +303,33 @@
       const password = document.getElementById('auth-password').value;
       if(!email || !password) return alert("Email और Password दोनों भरें");
 
-      try {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) throw error;
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) alert("Login Error: " + error.message);
+      else {
         showStatus("✅ लॉगिन सफल!");
         checkAuth();
-      } catch (err) {
-        alert("Login Error: " + err.message);
       }
     }
 
     async function logoutUser() {
       await supabase.auth.signOut();
+      cancelEdit(); // Reset form
       checkAuth();
     }
 
     // ==========================================
-    // 6. CREATE & DELETE POSTS
+    // 6. CREATE / EDIT / DELETE POSTS
     // ==========================================
     function togglePostForm() {
-      document.getElementById('create-post-form').classList.toggle('hidden');
+      const form = document.getElementById('create-post-form');
+      if (form.classList.contains('hidden')) {
+        cancelEdit(); // Clear fields if opening
+        form.classList.remove('hidden');
+        document.getElementById('add-post-btn').classList.add('hidden');
+      } else {
+        form.classList.add('hidden');
+        document.getElementById('add-post-btn').classList.remove('hidden');
+      }
     }
 
     async function submitPost() {
@@ -333,53 +340,59 @@
       const desc = document.getElementById('post-desc').value;
       const price = document.getElementById('post-price').value;
       const loc = document.getElementById('post-location').value;
+      const comp = document.getElementById('post-company').value;
       const file = document.getElementById('post-image').files[0];
 
       if (!title) return alert("शीर्षक (Title) ज़रूरी है");
 
       let image_url = null;
-      
+      const submitBtn = document.getElementById('submit-btn');
+      submitBtn.innerText = "कृपया रुकें...";
+      submitBtn.disabled = true;
+
       try {
-        // फोटो अपलोड लॉजिक
+        // Image Upload Logic
         if (file) {
           const fileExt = file.name.split('.').pop();
           const fileName = `${currentUser.id}-${Date.now()}.${fileExt}`;
           
           const { error: uploadError } = await supabase.storage.from('photos').upload(fileName, file);
-          if (uploadError) throw new Error("Photo Upload Failed: " + uploadError.message);
+          if (uploadError) throw new Error("Image Upload Error: " + uploadError.message);
           
           const { data } = supabase.storage.from('photos').getPublicUrl(fileName);
           image_url = data.publicUrl;
         }
 
-        // डेटाबेस में डेटा सेव करना
-        const { error } = await supabase.from('posts').insert({
-          user_id: currentUser.id,
-          type: type,
-          title: title,
-          description: desc,
+        const postData = {
+          type: type, title: title, description: desc,
           price: price ? parseFloat(price) : null,
-          location: loc,
-          image_url: image_url
-        });
+          location: loc, company: comp
+        };
 
-        if (error) throw error;
+        if (image_url) postData.image_url = image_url; // Only update image if new one selected
 
-        alert("✅ पोस्ट सफलतापूर्वक जुड़ गई!");
+        if (editingPostId) {
+          // UPDATE POST
+          const { error } = await supabase.from('posts').update(postData).eq('id', editingPostId);
+          if (error) throw error;
+          alert("✅ पोस्ट अपडेट हो गई!");
+        } else {
+          // CREATE POST
+          postData.user_id = currentUser.id;
+          const { error } = await supabase.from('posts').insert([postData]);
+          if (error) throw error;
+          alert("✅ पोस्ट सफलतापूर्वक जुड़ गई!");
+        }
         
-        // फॉर्म खाली करें
-        document.getElementById('post-title').value = '';
-        document.getElementById('post-desc').value = '';
-        document.getElementById('post-price').value = '';
-        document.getElementById('post-location').value = '';
-        document.getElementById('post-image').value = '';
-        
-        togglePostForm();
+        cancelEdit();
         loadMyPosts();
         fetchPosts('all', 'home-posts');
         
       } catch (err) {
         alert("Error: " + err.message);
+      } finally {
+        submitBtn.innerText = "Publish Post";
+        submitBtn.disabled = false;
       }
     }
 
@@ -387,38 +400,81 @@
       if (!currentUser) return;
       const container = document.getElementById('my-posts');
       
-      try {
-        const { data, error } = await supabase.from('posts').select('*').eq('user_id', currentUser.id).order('created_at', { ascending: false });
-        
-        if (error) throw error;
-        if (!data || data.length === 0) {
-          container.innerHTML = '<p class="muted">आपने अभी तक कोई पोस्ट नहीं की है।</p>';
-          return;
-        }
+      const { data, error } = await supabase.from('posts').select('*').eq('user_id', currentUser.id).order('created_at', { ascending: false });
+      
+      if (error) return container.innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
+      if (!data || data.length === 0) {
+        container.innerHTML = '<p class="muted">आपने अभी तक कोई पोस्ट नहीं की है।</p>';
+        return;
+      }
 
-        container.innerHTML = data.map(post => `
-          <div class="card">
-            ${post.image_url ? `<img src="${post.image_url}">` : ''}
-            <h3>${post.title}</h3>
+      container.innerHTML = data.map(post => `
+        <div class="card">
+          ${post.image_url ? `<img src="${post.image_url}">` : ''}
+          <span class="badge" style="background: #eee;">${post.type.toUpperCase()}</span>
+          <h3>${post.title}</h3>
+          <div class="btn-group">
+            <button class="edit" onclick="editPost('${post.id}')">✏️ Edit</button>
             <button class="danger" onclick="deletePost('${post.id}')">🗑️ Delete</button>
           </div>
-        `).join('');
-      } catch (err) {
-        container.innerHTML = `<p style="color:red;">Error: ${err.message}</p>`;
-      }
+        </div>
+      `).join('');
     }
 
     async function deletePost(id) {
       if (!confirm("क्या आप सच में इसे डिलीट करना चाहते हैं?")) return;
-      try {
-        const { error } = await supabase.from('posts').delete().eq('id', id);
-        if (error) throw error;
+      
+      const { error } = await supabase.from('posts').delete().eq('id', id);
+      if (error) alert("Delete Error: " + error.message);
+      else {
         showStatus("🗑️ पोस्ट डिलीट हो गई");
         loadMyPosts();
         fetchPosts('all', 'home-posts');
-      } catch (err) {
-        alert("Delete Error: " + err.message);
       }
+    }
+
+    // EDIT FUNCTIONALITY
+    async function editPost(id) {
+      const { data, error } = await supabase.from('posts').select('*').eq('id', id).single();
+      if (error) return alert("Error loading post: " + error.message);
+
+      // Fill form
+      document.getElementById('post-type').value = data.type;
+      document.getElementById('post-title').value = data.title;
+      document.getElementById('post-desc').value = data.description || '';
+      document.getElementById('post-price').value = data.price || '';
+      document.getElementById('post-location').value = data.location || '';
+      document.getElementById('post-company').value = data.company || '';
+      document.getElementById('post-image').value = ''; // Clear file input
+      
+      // Set Mode to Edit
+      editingPostId = id;
+      document.getElementById('form-title').innerText = "पोस्ट एडिट करें";
+      document.getElementById('submit-btn').innerText = "Update Post";
+      document.getElementById('cancel-btn').style.display = "block";
+      
+      // Show form and scroll up
+      document.getElementById('create-post-form').classList.remove('hidden');
+      document.getElementById('add-post-btn').classList.add('hidden');
+      document.getElementById('create-post-form').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function cancelEdit() {
+      editingPostId = null;
+      document.getElementById('form-title').innerText = "नई पोस्ट जोड़ें";
+      document.getElementById('submit-btn').innerText = "Publish Post";
+      document.getElementById('cancel-btn').style.display = "none";
+      
+      // Clear fields
+      document.getElementById('post-title').value = '';
+      document.getElementById('post-desc').value = '';
+      document.getElementById('post-price').value = '';
+      document.getElementById('post-location').value = '';
+      document.getElementById('post-company').value = '';
+      document.getElementById('post-image').value = '';
+      
+      document.getElementById('create-post-form').classList.add('hidden');
+      document.getElementById('add-post-btn').classList.remove('hidden');
     }
 
     // ==========================================
