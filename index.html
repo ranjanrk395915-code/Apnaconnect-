@@ -164,10 +164,10 @@
     // 1. SUPABASE CONFIGURATION
     // यहाँ अपनी Supabase URL और Key डालें
     // ==========================================
-    const SUPABASE_URL = 'https://ckfpogzlamlksoooiuug.supabase.co/rest/v1';
+    const SUPABASE_URL = 'https://ckfpogzlamlksoooiuug.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_8nzH9WJ02KJlb6cl_YLG_w_DnH9x0Ly';
 
-    const supabase = window.supabase.createClient(SUPABASE_URL, sb_publishable_8nzH9WJ02KJlb6cl_YLG_w_DnH9x0Ly);
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     let currentUser = null;
 
     // ==========================================
