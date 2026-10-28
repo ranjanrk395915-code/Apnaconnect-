@@ -1,0 +1,67 @@
+<!DOCTYPE html><html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ApnaConnect</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f6fb;color:#172033}
+header{background:#123b72;color:white;text-align:center;padding:28px 12px}
+nav{background:#09264b;padding:12px;text-align:center}
+nav a{color:white;text-decoration:none;display:inline-block;padding:8px}
+main{max-width:900px;margin:auto;padding:18px}
+.hero{text-align:center;padding:22px 0}
+input{padding:13px;width:100%;max-width:450px;border:1px solid #ccc;border-radius:8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.card{background:white;padding:20px;border-radius:12px;box-shadow:0 2px 8px #0001}
+.card a{color:#145bc1;text-decoration:none}
+footer{margin-top:25px;background:#09264b;color:white;text-align:center;padding:20px}
+</style>
+</head>
+<body>
+<header>
+<h1>ApnaConnect</h1>
+<p>आपके शहर की सेवाएँ, एक ही जगह!</p>
+</header>
+<nav>
+<a href="#rooms">Room Rent</a>
+<a href="#news">News</a>
+<a href="#jobs">Jobs</a>
+<a href="#shop">Shopping</a>
+<a href="#account">Login</a>
+</nav>
+<main>
+<section class="hero">
+<h2>आपको क्या चाहिए?</h2>
+<input type="search" placeholder="कमरा, नौकरी या प्रोडक्ट खोजें">
+</section>
+<div class="grid">
+<section class="card" id="rooms">
+<h2>🏠 Room Rent</h2>
+<p>कमरे, हॉस्टल और PG खोजें।</p>
+<a href="#account">कमरे देखें →</a>
+</section>
+<section class="card" id="news">
+<h2>📰 News</h2>
+<p>देश और दुनिया की खबरें।</p>
+<a href="#account">खबरें पढ़ें →</a>
+</section>
+<section class="card" id="jobs">
+<h2>💼 Jobs</h2>
+<p>नई नौकरी और वैकेंसी।</p>
+<a href="#account">नौकरियाँ देखें →</a>
+</section>
+<section class="card" id="shop">
+<h2>🛒 Shopping</h2>
+<p>प्रोडक्ट की लिस्टिंग।</p>
+<a href="#account">प्रोडक्ट देखें →</a>
+</section>
+</div>
+<section class="card" id="account" style="margin-top:20px">
+<h2>Login / Register</h2>
+<p>यूजर अकाउंट की सुविधा अगले चरण में जोड़ी जाएगी।</p>
+</section>
+</main>
+<footer>© 2026 ApnaConnect</footer>
+</body>
+</html>
